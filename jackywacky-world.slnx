@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="jackywacky-world/jackywacky-world.vcxproj" Id="9e5302de-f449-4966-a1e9-2371ec811cdb" />
+</Solution>

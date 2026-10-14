@@ -1,0 +1,156 @@
+:root{
+  /* Dark theme palette */
+  --bg: #071026; /* deep bluish night */
+  --bg-2: #0b1530; /* secondary gradient stop */
+  --card: rgba(255,255,255,0.03);
+  --card-border: rgba(255,255,255,0.04);
+  --accent: #ff66cc; /* neon pink accent */
+  --text: #e6eef8;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  /* dark gradient background */
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(255,128,200,0.04), transparent), linear-gradient(135deg, var(--bg), var(--bg-2));
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  position:relative; /* needed for fog pseudo-elements */
+  overflow:hidden;
+}
+
+main{
+  width:100%;
+  max-width:720px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  backdrop-filter: blur(6px) saturate(120%);
+  padding:2rem;
+  border-radius:12px;
+  box-shadow:0 12px 40px rgba(2,6,23,0.6);
+  text-align:center;
+}
+
+header h1{margin:0 0 1rem 0}
+
+/* fog / mist animation layers (subtle) */
+body::before,
+body::after{
+  content:"";
+  position:absolute;
+  left:-20%;
+  top: -10%;
+  width:140%;
+  height:60%;
+  pointer-events:none;
+  background: radial-gradient(40% 60% at 20% 40%, rgba(255,255,255,0.03), transparent 30%), radial-gradient(30% 40% at 80% 60%, rgba(255,255,255,0.02), transparent 40%);
+  mix-blend-mode: screen;
+  opacity:0.55;
+  transform:translate3d(0,0,0);
+}
+
+body::before{
+  filter: blur(28px) saturate(120%);
+  animation: fogDriftA 28s linear infinite;
+}
+body::after{
+  top:10%;
+  height:80%;
+  filter: blur(40px) saturate(120%);
+  opacity:0.35;
+  animation: fogDriftB 42s linear infinite;
+}
+
+@keyframes fogDriftA{
+  0%{transform:translateX(-10%) translateY(0) scale(1)}
+  50%{transform:translateX(8%) translateY(6%) scale(1.02)}
+  100%{transform:translateX(-10%) translateY(0) scale(1)}
+}
+
+@keyframes fogDriftB{
+  0%{transform:translateX(10%) translateY(0) scale(1)}
+  50%{transform:translateX(-8%) translateY(-6%) scale(1.03)}
+  100%{transform:translateX(10%) translateY(0) scale(1)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  body::before, body::after { animation: none; }
+}
+
+/* Neon pink glow for the header */
+header{
+  text-align:center;
+}
+header h1{
+  color: #ff66cc;
+  /* stacked text-shadows create a neon glow */
+  text-shadow: 0 0 6px #ff66cc, 0 0 12px #ff4dd2, 0 0 24px rgba(255,0,255,0.45);
+}
+header p{
+  color: #ff9fcb;
+  margin: 0 0 0.5rem 0;
+}
+
+/* simple site navigation */
+.site-nav{
+  display:flex;
+  gap:0.75rem;
+  justify-content:center;
+  margin:0 0 1rem 0;
+}
+.site-nav a{
+  color:#fff;
+  background:transparent;
+  padding:0.4rem 0.8rem;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:600;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.site-nav a:hover,
+.site-nav a:focus{
+  outline:none;
+  color:#111827;
+  background:linear-gradient(90deg,#ff9fcf, #ffd6f0);
+  box-shadow: 0 6px 18px rgba(255,102,204,0.14);
+}
+
+button{
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  padding:0.6rem 1rem;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  transform-origin:center;
+  will-change:transform, box-shadow;
+  transition:opacity 120ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+/* subtle hover state plus neon-pulse animation when hovered */
+button:hover{opacity:0.98}
+
+@keyframes neonPulse {
+  0% {
+	transform: scale(1);
+	box-shadow: 0 0 0 0 rgba(255,102,204,0);
+  }
+  50% {
+	transform: scale(1.06);
+	box-shadow: 0 0 18px 6px rgba(255,102,204,0.18);
+  }
+  100% {
+	transform: scale(1);
+	box-shadow: 0 0 0 0 rgba(255,102,204,0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference){
+  button:hover{animation: neonPulse 900ms infinite;}
+}
